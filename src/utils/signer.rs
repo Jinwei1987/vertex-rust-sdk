@@ -1,17 +1,16 @@
 use core::fmt::Debug;
 use std::str::FromStr;
 
-use ethers::prelude::k256::ecdsa::SigningKey;
 use ethers::prelude::{H160, U256};
 use ethers::types::Signature;
 use ethers_core::types::transaction::eip712::{EIP712Domain, Eip712};
-use ethers_signers::Signer;
 use ethers_signers::Wallet;
 use eyre::Result;
 
 use crate::tx::{domain, get_eip712_digest};
 
 use crate::core::base::VertexBase;
+use crate::ecdsa::SigningKey;
 
 pub struct VertexSigner<'a, V: VertexBase> {
     vertex: &'a V,
@@ -114,6 +113,7 @@ impl<'a, V: VertexBase> VertexSigner<'a, V> {
 }
 
 pub fn wallet_with_chain_id(private_key: &str, chain_id: U256) -> Result<Wallet<SigningKey>> {
-    let wallet = Wallet::from_str(private_key)?;
-    Ok(wallet.with_chain_id(chain_id.as_u64()))
+    let signer = SigningKey::from_str(private_key)?;
+    let address = signer.address();
+    Ok(Wallet::new_with_signer(signer, address, chain_id.as_u64()))
 }

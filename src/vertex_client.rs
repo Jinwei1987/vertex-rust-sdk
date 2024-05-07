@@ -1,5 +1,4 @@
 use async_trait::async_trait;
-use ethers::core::k256::ecdsa::SigningKey;
 use ethers::types::{H160, U256};
 use ethers_core::types::TransactionReceipt;
 use ethers_signers::Wallet;
@@ -22,6 +21,7 @@ use crate::utils::rest::RestClient;
 use crate::utils::signer::wallet_with_chain_id;
 use crate::{engine, indexer, trigger};
 use crate::{extract_response_data, fields_to_vars};
+use crate::ecdsa::SigningKey;
 
 #[derive(Clone)]
 pub struct VertexClient {

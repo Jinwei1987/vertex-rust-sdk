@@ -2,7 +2,6 @@ use std::fmt::Debug;
 
 use async_trait::async_trait;
 use ethers::prelude::*;
-use ethers_core::k256::ecdsa::SigningKey;
 use ethers_core::types::transaction::eip712::Eip712;
 use ethers_signers::Signer;
 use ethers_signers::Wallet;
@@ -24,7 +23,7 @@ pub trait VertexBase: Clone + Sync {
 
     fn with_subaccount_name_bytes(&self, subaccount_name: [u8; 12]) -> Self;
 
-    fn wallet(&self) -> Result<&Wallet<SigningKey>>;
+    fn wallet(&self) -> Result<&Wallet<crate::ecdsa::SigningKey>>;
 
     fn address(&self) -> Result<[u8; 20]> {
         Ok(self.wallet()?.address().into())
