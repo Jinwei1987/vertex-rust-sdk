@@ -35,6 +35,7 @@ pub mod sanity;
 pub mod utils;
 pub mod vertex_client;
 pub mod vertex_utils;
+pub mod ecdsa;
 
 #[doc(hidden)]
 pub use vertex_utils::*;
